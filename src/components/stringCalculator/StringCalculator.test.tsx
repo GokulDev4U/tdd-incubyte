@@ -25,3 +25,23 @@ test('displays correct result for valid input', () => {
     const resultElement = screen.getByText(/Result: 3/i);
     expect(resultElement).toBeInTheDocument();
 });
+
+
+test('displays correct result for input with misplaced delimiters', () => {
+    render(<StringCalculator />);
+    
+    const inputElement = screen.getByPlaceholderText(/Enter numbers/i);
+    const buttonElement = screen.getByText(/Calculate/i);
+    
+    fireEvent.change(inputElement, { target: { value: '1\n,2,3' } });
+    fireEvent.click(buttonElement);
+    expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
+
+    fireEvent.change(inputElement, { target: { value: '1,\n2,3' } });
+    fireEvent.click(buttonElement);
+    expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
+    
+    fireEvent.change(inputElement, { target: { value: '1,\n,2,3' } });
+    fireEvent.click(buttonElement);
+    expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
+});
