@@ -45,3 +45,17 @@ test('displays correct result for input with misplaced delimiters', () => {
     fireEvent.click(buttonElement);
     expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
 });
+
+test('supports custom delimiters', () => {
+    render(<StringCalculator />);
+    
+    const inputElement = screen.getByPlaceholderText(/Enter numbers/i);
+    const buttonElement = screen.getByText(/Calculate/i);
+    
+    fireEvent.change(inputElement, { target: { value: '//;\n1;2' } });
+    fireEvent.click(buttonElement);
+    
+    const resultElement = screen.getByText(/Result: 3/i);
+    expect(resultElement).toBeInTheDocument();
+});
+

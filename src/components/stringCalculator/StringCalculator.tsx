@@ -10,15 +10,27 @@ const StringCalculator: React.FC = () => {
   //     setResult(sum);
   // };
 
-  const handleCalculate = () => {
-    // Replace all newline characters with commas
-    const sanitizedInput = input.replace(/\n/g, ",");
-    const numbers = sanitizedInput.split(",").map(Number);
-    const sum = numbers.reduce((acc, num) => acc + (isNaN(num) ? 0 : num), 0);
-    setResult(sum);
-  };
+//   const handleCalculate = () => {
+//     // Replace all newline characters with commas
+//     const sanitizedInput = input.replace(/\n/g, ",");
+//     const numbers = sanitizedInput.split(",").map(Number);
+//     const sum = numbers.reduce((acc, num) => acc + (isNaN(num) ? 0 : num), 0);
+//     setResult(sum);
+//   };
 
-  console.log("res result", result);
+const handleCalculate = () => {
+    let numbers = input;
+    let delimiter = /[\n,]/;
+
+    if (numbers.startsWith("//")) {
+        const parts = numbers.split('\n');
+        delimiter = new RegExp(`[${parts[0].charAt(2)}]`);
+        numbers = parts[1];
+    }
+
+    const sum = numbers.split(delimiter).map(Number).reduce((acc, num) => acc + num, 0);
+    setResult(sum);
+};
 
   return (
     <div>
