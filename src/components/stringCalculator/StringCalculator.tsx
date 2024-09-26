@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Container, Form, Button, Card } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const StringCalculator: React.FC = () => {
   const [input, setInput] = useState("");
@@ -33,17 +35,33 @@ const handleCalculate = () => {
 };
 
   return (
-    <div>
-      <textarea
-        // type="text"
-        placeholder="Enter numbers"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button onClick={handleCalculate}>Calculate</button>
-      {result !== null && <div>Result: {result}</div>}
-    </div>
+    <Container className="mt-5">
+    <Card className="p-4 shadow-sm">
+      <h2 className="text-center mb-4">String Calculator</h2>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicTextArea">
+          <Form.Label>Enter numbers (use commas or newlines):</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Enter numbers"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" onClick={handleCalculate} className="w-100">
+          Calculate
+        </Button>
+      </Form>
+      {result !== null && (
+        <div className="mt-4 text-center">
+          <h4>Result: {result}</h4>
+        </div>
+      )}
+    </Card>
+  </Container>
   );
 };
 
 export default StringCalculator;
+
